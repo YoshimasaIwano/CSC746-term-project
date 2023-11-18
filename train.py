@@ -43,11 +43,11 @@ def train_model(model, trainloader, device, epochs=1):
     max_values = {key: 0 for key in [
         "count", "cpu_time_total", "cuda_time_total",
         "self_cpu_time_total", "self_cuda_time_total", 
-        "cpu_memory_usage", "cuda_memory_usage", "self_cpu_memory_usage", "self_cuda_memory_usage",
+        "cpu_memory_usage", "cuda_memory_usage", 
     ]}
 
     for key in max_values:
         print(f"Max of {key}: {aggregated_profiler_data.table(sort_by=key, row_limit=1)}")
-
-
+    
+    print(prof.total_average())
 
