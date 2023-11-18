@@ -10,10 +10,8 @@ def train_model(model, trainloader, device, epochs=1):
     print("Starting training...")
     with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], profile_memory=True) as prof:
         for epoch in range(epochs): 
-            # print(f"Starting epoch {epoch + 1}/{epochs}")
             running_loss = 0.0
             for i, data in enumerate(trainloader, 0):
-                # print(f"  Training batch {i + 1}")
                 inputs, labels = data[0].to(device), data[1].to(device)
 
                 optimizer.zero_grad()
@@ -23,13 +21,17 @@ def train_model(model, trainloader, device, epochs=1):
                 optimizer.step()
 
                 running_loss += loss.item()
-                # if i % 2000 == 1999: 
-                #     # print(f'  [{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
-                #     running_loss = 0.0
-
-            # print(f"Completed epoch {epoch + 1}/{epochs}")
 
     print("Training complete. Printing profiler results...")
+    # prof.export_chrome_trace("trace.json")  # Export the trace to a file
+
+    # Summarize and print total times
+    total_cuda_time = sum([k.cuda_time_total for k in prof.key_averages()])
+    total_cpu_time = sum([k.cpu_time_total for k in prof.key_averages()])
+    print(f"Total CUDA time: {total_cuda_time / 1e6} s")
+    print(f"Total CPU time: {total_cpu_time / 1e6} s")
+
+    # Print the table of the most significant operations
     print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=5))
 
 
