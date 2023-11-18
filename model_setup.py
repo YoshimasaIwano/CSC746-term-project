@@ -1,8 +1,10 @@
 import torch
 from torchvision import models
+from torchvision.models import ResNet50_Weights
 
 def setup_model(device, num_classes=100):
-    model = models.resnet50(pretrained=False)
+    weights = ResNet50_Weights.DEFAULT
+    model = models.resnet50(weights=weights)
     model.fc = torch.nn.Linear(model.fc.in_features, num_classes)
     model.to(device)
 
