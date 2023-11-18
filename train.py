@@ -2,7 +2,7 @@ import torch.optim as optim
 import torch
 from torch.profiler import profile, ProfilerActivity
 
-def train_model(model, trainloader, device, epochs=10):
+def train_model(model, trainloader, device, epochs=1):
     model.train()
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
