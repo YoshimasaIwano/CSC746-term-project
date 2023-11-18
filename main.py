@@ -17,7 +17,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Training script')
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size for training')
     parser.add_argument('--use_gpus', type=int, default=1, help='Number of GPUs to use')
-    parser.add_argument('--data_size_factor', type=float, default=1.0, help='Factor to scale data size')
+    parser.add_argument('--data_size_factor', type=int, default=10, help='Factor to scale data size')
     
     args = parser.parse_args()
     main(args.batch_size, args.use_gpus, args.data_size_factor)
