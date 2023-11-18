@@ -20,7 +20,7 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader, Subset
 import numpy as np
 
-def get_train_loader(batch_size):
+def get_train_loader(batch_size=64):
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
