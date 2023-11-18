@@ -32,6 +32,6 @@ def train_model(model, trainloader, device, epochs=1):
     print(f"Total CPU time: {total_cpu_time / 1e6} s")
 
     # Print the table of the most significant operations
-    print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=5))
+    print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=-1))
 
 
