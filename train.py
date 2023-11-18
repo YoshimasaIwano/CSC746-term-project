@@ -1,23 +1,27 @@
 import torch.optim as optim
 import torch
+from torch.profiler import profile, ProfilerActivity
 
 def train_model(model, trainloader, device, epochs=10):
+    model.train()
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
-    for epoch in range(epochs): 
-        running_loss = 0.0
-        for i, data in enumerate(trainloader, 0):
-            inputs, labels = data[0].to(device), data[1].to(device)
-            optimizer.zero_grad()
-            outputs = model(inputs)
-            loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
+    
+    with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], profile_memory=True, with_stack=True) as prof:
+        for epoch in range(epochs): 
+            running_loss = 0.0
+            for i, data in enumerate(trainloader, 0):
+                inputs, labels = data[0].to(device), data[1].to(device)
+                optimizer.zero_grad()
+                outputs = model(inputs)
+                loss = criterion(outputs, labels)
+                loss.backward()
+                optimizer.step()
 
-            running_loss += loss.item()
-            if i % 2000 == 1999: 
-                print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
-                running_loss = 0.0
+                running_loss += loss.item()
+                if i % 2000 == 1999: 
+                    print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
+                    running_loss = 0.0
 
-    print('Finished Training')
+    print(prof.key_averages(group_by_stack_n=5).table(sort_by="cuda_time_total", row_limit=10))
