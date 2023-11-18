@@ -5,7 +5,8 @@ from train import train_model
 
 def main():
     device = get_device()
-    trainloader = get_train_loader(batch_size=64, num_workers=2)
+    batch_size = 64
+    trainloader = get_train_loader(batch_size=batch_size)
     model = setup_model(device)
     train_model(model, trainloader, device)
 

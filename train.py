@@ -28,8 +28,10 @@ def train_model(model, trainloader, device, epochs=1):
     # Summarize and print total times
     total_cuda_time = sum([k.cuda_time_total for k in prof.key_averages()])
     total_cpu_time = sum([k.cpu_time_total for k in prof.key_averages()])
+    total_operations = sum([k.count for k in prof.key_averages()])
     print(f"Total CUDA time: {total_cuda_time / 1e6} s")
     print(f"Total CPU time: {total_cpu_time / 1e6} s")
+    print(f"Total operations: {total_operations}")
 
     # Print the table of the most significant operations
     # print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=-1))
@@ -44,15 +46,5 @@ def train_model(model, trainloader, device, epochs=1):
     for key in max_values:
         print(f"Max of {key}: {prof.key_averages().table(sort_by=key, row_limit=1)}")
 
-    # Iterate through each metric and calculate the maximum
-    for event in prof.key_averages():
-        for key in max_values:
-            attr = getattr(event, key, None)
-            if isinstance(attr, (int, float)):
-                max_values[key] = max(max_values[key], attr)
-
-    # Print the max values
-    for key, value in max_values.items():
-        print(f"Max {key}: {value}")
 
 

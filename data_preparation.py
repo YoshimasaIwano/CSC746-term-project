@@ -20,7 +20,7 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader, Subset
 import numpy as np
 
-def get_train_loader(batch_size=128, num_workers=2):
+def get_train_loader(batch_size):
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
@@ -39,6 +39,6 @@ def get_train_loader(batch_size=128, num_workers=2):
     trainset = Subset(full_trainset, subset_indices)
 
     # Create DataLoader for the subset
-    trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+    trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True, pin_memory=True)
     
     return trainloader
