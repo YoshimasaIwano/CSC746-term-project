@@ -33,7 +33,6 @@ def train_model(model, trainloader, device, epochs=1):
 
     # Print the table of the most significant operations
     # print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=-1))
-    results = prof.key_averages()
 
     # Initialize a dictionary to store max values for each key
     max_values = {key: 0 for key in [
@@ -43,15 +42,18 @@ def train_model(model, trainloader, device, epochs=1):
         "cpu_children", "cpu_parent", "device_type", "is_legacy", "flops"
     ]}
 
-    # Iterate through each metric and calculate the maximum
-    for event in prof.key_averages():
-        for key in max_values:
-            attr = getattr(event, key, None)
-            if isinstance(attr, (int, float)):
-                max_values[key] = max(max_values[key], attr)
+    for key in max_values:
+        print(f"Max of {key}: {prof.key_averages().table(sort_by=key, row_limit=1)}")
 
-    # Print the max values
-    for key, value in max_values.items():
-        print(f"Max {key}: {value}")
+    # # Iterate through each metric and calculate the maximum
+    # for event in prof.key_averages():
+    #     for key in max_values:
+    #         attr = getattr(event, key, None)
+    #         if isinstance(attr, (int, float)):
+    #             max_values[key] = max(max_values[key], attr)
+
+    # # Print the max values
+    # for key, value in max_values.items():
+    #     print(f"Max {key}: {value}")
 
 
