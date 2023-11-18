@@ -29,11 +29,7 @@ def train_model(model, trainloader, device, epochs=1):
     aggregated_profiler_data = prof.key_averages()
 
     # Summarize and print total times
-    total_cuda_time = sum([k.cuda_time_total for k in aggregated_profiler_data])
-    total_cpu_time = sum([k.cpu_time_total for k in aggregated_profiler_data])
     total_operations = sum([k.count for k in aggregated_profiler_data])
-    print(f"Total CUDA time: {total_cuda_time / 1e6} s")
-    print(f"Total CPU time: {total_cpu_time / 1e6} s")
     print(f"Total operations: {total_operations}")
 
     # Print the table of the most significant operations
@@ -41,13 +37,12 @@ def train_model(model, trainloader, device, epochs=1):
 
     # Initialize a dictionary to store max values for each key
     max_values = {key: 0 for key in [
-        "count", "cpu_time_total", "cuda_time_total",
-        "self_cpu_time_total", "self_cuda_time_total", 
         "cpu_memory_usage", "cuda_memory_usage", 
     ]}
 
     for key in max_values:
         print(f"Max of {key}: {aggregated_profiler_data.table(sort_by=key, row_limit=1)}")
     
-    print(prof.total_average())
 
+# GPU memory: 40 GB (https://docs.nersc.gov/systems/perlmutter/architecture/)
+# CPU memory: 256 GB (https://docs.nersc.gov/systems/perlmutter/architecture/)
