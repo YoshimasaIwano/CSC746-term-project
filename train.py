@@ -8,7 +8,7 @@ def train_model(model, trainloader, device, epochs=1):
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
     print("Starting training...")
-    with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], profile_memory=True, group_by_input_shape=True) as prof:
+    with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], profile_memory=True) as prof:
         for epoch in range(epochs): 
             # print(f"Starting epoch {epoch + 1}/{epochs}")
             running_loss = 0.0
