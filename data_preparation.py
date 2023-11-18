@@ -29,8 +29,8 @@ def get_train_loader(batch_size=128, num_workers=2):
     # Load the full CIFAR-100 dataset
     full_trainset = torchvision.datasets.CIFAR100(root='./data', train=True, download=True, transform=transform)
 
-    # Calculate the size of the subset (1/4th of the full dataset)
-    subset_size = len(full_trainset) // 4
+    # Calculate the size of the subset (1/10th of the full dataset)
+    subset_size = len(full_trainset) // 10
 
     # Generate random indices for the subset
     subset_indices = torch.randperm(len(full_trainset))[:subset_size].tolist()

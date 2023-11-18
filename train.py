@@ -35,16 +35,23 @@ def train_model(model, trainloader, device, epochs=1):
     # print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=-1))
     results = prof.key_averages()
 
-    # Initialize a dictionary to store max values
-    max_values = {}
+    # Initialize a dictionary to store max values for each key
+    max_values = {key: 0 for key in [
+        "count", "node_id", "is_async", "is_remote", "cpu_time_total", "cuda_time_total",
+        "self_cpu_time_total", "self_cuda_time_total", "input_shapes", "stack", "scope",
+        "cpu_memory_usage", "cuda_memory_usage", "self_cpu_memory_usage", "self_cuda_memory_usage",
+        "cpu_children", "cpu_parent", "device_type", "is_legacy", "flops"
+    ]}
 
-    # Iterate through each metric
-    for event in results:
-        for key in event.key_averages().keys():
-            max_values[key] = max(max_values.get(key, 0), getattr(event, key))
+    # Iterate through each metric and calculate the maximum
+    for event in prof.key_averages():
+        for key in max_values:
+            attr = getattr(event, key, None)
+            if isinstance(attr, (int, float)):
+                max_values[key] = max(max_values[key], attr)
 
     # Print the max values
-    for metric, max_val in max_values.items():
-        print(f"{metric}: {max_val}")
+    for key, value in max_values.items():
+        print(f"Max {key}: {value}")
 
 
