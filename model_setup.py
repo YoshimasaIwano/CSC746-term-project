@@ -1,10 +1,10 @@
 import torch
 import torchvision.models as models
-from torchvision.models import ResNet50_Weights
+from torchvision.models import ResNet18_Weights
 
 def setup_model(device, num_classes=100, use_gpus=1):
-    weights = ResNet50_Weights.DEFAULT
-    model = models.resnet50(weights=weights)
+    weights = ResNet18_Weights.DEFAULT
+    model = models.resnet18(weights=weights)
     model.fc = torch.nn.Linear(model.fc.in_features, num_classes)
     model.to(device)
 
