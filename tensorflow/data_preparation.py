@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def get_train_loader(batch_size=64, data_size_factor=1):
+def get_train_loader(batch_size=64, data_size_factor=10):
     (train_images, train_labels), _ = tf.keras.datasets.cifar100.load_data()
 
     # Reduce dataset size based on data_size_factor
