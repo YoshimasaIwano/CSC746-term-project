@@ -29,7 +29,11 @@ def train_model(model, trainloader, device, epochs=1):
     aggregated_profiler_data = prof.key_averages()
 
     # Summarize and print total times
+    total_cuda_time = sum([k.cuda_time_total for k in aggregated_profiler_data])
+    total_cpu_time = sum([k.cpu_time_total for k in aggregated_profiler_data])
     total_operations = sum([k.count for k in aggregated_profiler_data])
+    print(f"Total CUDA time: {total_cuda_time}")
+    print(f"Total CPU time: {total_cpu_time}")
     print(f"Total operations: {total_operations}")
 
     # Print the table of the most significant operations
