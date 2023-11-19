@@ -2,7 +2,7 @@ import argparse
 from device_setup import get_device
 from data_preparation import get_train_loader
 from model_setup import setup_model
-from pytorch.train import train_model
+from train import train_model
 
 def main(batch_size, use_gpus, data_size_factor):
     print(f"Batch size: {batch_size}")
