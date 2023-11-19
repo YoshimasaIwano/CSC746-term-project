@@ -6,7 +6,6 @@ from torch.nn.parallel import DistributedDataParallel
 import torch.distributed as dist
 
 def setup_model(rank, world_size, num_classes=100):
-    dist.init_process_group("nccl", rank=rank, world_size=world_size)
     device = torch.device(f"cuda:{rank}")
 
     weights = ResNet152_Weights.DEFAULT
