@@ -29,7 +29,7 @@ from torch.utils.data import DataLoader, Subset
 
 from torchvision.datasets import ImageNet
 
-def get_train_loader_imagenet(batch_size=64, data_size_factor=1):
+def get_train_loader(batch_size=64, data_size_factor=1):
     transform = transforms.Compose([
         transforms.Resize(256),
         transforms.CenterCrop(224),
