@@ -1,6 +1,7 @@
 import torch
 import torchvision.models as models
 from torchvision.models import ResNet152_Weights
+from torch.nn.parallel import DistributedDataParallel
 
 def setup_model(device, num_classes=100, use_gpus=1):
     weights = ResNet152_Weights.DEFAULT
@@ -12,7 +13,7 @@ def setup_model(device, num_classes=100, use_gpus=1):
     print(f"Number of GPUs available: {num_gpus}")
 
     if num_gpus > 1 and use_gpus > 1:
-        model = torch.nn.DistributedDataParallel(model, device_ids=list(range(use_gpus)))
+        model = DistributedDataParallel(model, device_ids=list(range(use_gpus)))
 
     return model
 
