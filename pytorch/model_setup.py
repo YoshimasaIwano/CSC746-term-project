@@ -12,7 +12,7 @@ def setup_model(device, num_classes=100, use_gpus=1):
     print(f"Number of GPUs available: {num_gpus}")
 
     if num_gpus > 1 and use_gpus > 1:
-        model = torch.nn.DataParallel(model, device_ids=list(range(use_gpus)))
+        model = torch.nn.DistributedDataParallel(model, device_ids=list(range(use_gpus)))
 
     return model
 
@@ -27,6 +27,6 @@ def setup_model(device, num_classes=100, use_gpus=1):
 #     print(f"Number of GPUs available: {num_gpus}")
 
 #     if num_gpus > 1 and use_gpus > 1:
-#         model = torch.nn.DataParallel(model, device_ids=list(range(use_gpus)))
+#         model = torch.nn.DistributedDataParallel(model, device_ids=list(range(use_gpus)))
 
 #     return model
