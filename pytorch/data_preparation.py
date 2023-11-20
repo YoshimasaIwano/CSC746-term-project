@@ -4,7 +4,7 @@ import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader, Subset, DistributedSampler
 
-def get_train_loader(batch_size=64, data_size_factor=10, rank=0, world_size=1):
+def get_train_loader(batch_size=128, data_size_factor=10, rank=0, world_size=1):
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))

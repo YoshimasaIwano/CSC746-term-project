@@ -18,7 +18,7 @@ def main(batch_size, data_size_factor, rank, world_size):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Training script')
-    parser.add_argument('--batch_size', type=int, default=64, help='Batch size for training')
+    parser.add_argument('--batch_size', type=int, default=128, help='Batch size for training')
     parser.add_argument('--data_size_factor', type=int, default=10, help='Factor to scale data size')
     
     args = parser.parse_args()
