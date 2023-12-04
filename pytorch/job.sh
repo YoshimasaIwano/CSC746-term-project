@@ -2,7 +2,7 @@
 
 # Loop over each batch size and GPU count combination
 for data_size_factor in 10 2 1; do
-    for batch_size in 128 512 1024; do
+    for batch_size in 128 512 1024 2048; do
         for gpu_count in 1 2 4; do
             echo "Running with batch size $batch_size, $gpu_count GPUs, and data size factor $data_size_factor"
 

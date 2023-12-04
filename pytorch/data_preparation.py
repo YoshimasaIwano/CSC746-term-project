@@ -19,6 +19,6 @@ def get_train_loader(batch_size=128, data_size_factor=10, rank=0, world_size=1):
     # Use DistributedSampler for distributing the dataset
     sampler = DistributedSampler(trainset, num_replicas=world_size, rank=rank)
 
-    trainloader = DataLoader(trainset, batch_size=batch_size, sampler=sampler, pin_memory=True, num_workers=4)
+    trainloader = DataLoader(trainset, batch_size=batch_size, sampler=sampler, pin_memory=True)
     
     return trainloader
